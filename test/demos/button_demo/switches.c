@@ -31,6 +31,7 @@ switch_init()			/* setup switch */
 void
 switch_interrupt_handler()
 {
+ 
   char p2val = switch_update_interrupt_sense();
   if((p2val & SW1)==0)
     button = 0;
@@ -40,6 +41,6 @@ switch_interrupt_handler()
     button = 2;
   else if ((p2val & SW4)==0)
     button = 3;
-  // state_advance();
+  state_advance();
   //state_advance_buttons();
   }
