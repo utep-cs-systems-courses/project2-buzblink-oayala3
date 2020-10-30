@@ -1,8 +1,9 @@
 #include <msp430.h>
 #include "stateMachines.h"
 #include "led.h"
+#include "switches.h"
 
-char toggle_red()		/* always toggle! */
+void toggle_red()		/* always toggle! */
 {
   static char state = 0;
 
@@ -16,47 +17,45 @@ char toggle_red()		/* always toggle! */
     state = 0;
     break;
   }
-  return 1;			/* always changes an led */
+  led_changed = 1;
+  led_update();			/* always changes an led */
 }
 
-char toggle_green()
+void toggle_green()
 {
-  static char state=0;
-  switch(state)
+  static char state1=0;
+  switch(state1)
     {
   case 0:
     green_on=1;
-    state=1;
+    state1=1;
     break;
   case 1:
     green_on=0;
-    state=0;
+    state1=0;
     break;
   }
-  return 1;
+  led_changed = 1;
+  led_update();
 }
 
-void state_advance_buttons()
-{
+//void state_advance_buttons()
+void state_advance(){
   char changed=0;
   switch(button){
   case 0:
-    changed= toggle_red();
+    toggle_red();
     break;
   case 1:
-    changed=toggle_green();
-    break;
+    toggle_green();
+ break;
   case 2:
-    changed=toggle_red();
+    toggle_red();
     break;
   case 3:
-    changed = toggle_green();
+    toggle_green();
     break;
   default:
     break;
   }
-  led_changed=changed;
-  led_update();
 }
-
-

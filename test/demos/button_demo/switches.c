@@ -5,6 +5,8 @@
 
 char switch_state_down, switch_state_changed; /* effectively boolean */
 
+char button;
+  
 static char 
 switch_update_interrupt_sense()
 {
@@ -38,7 +40,6 @@ switch_interrupt_handler()
     button = 2;
   else if ((p2val & SW4)==0)
     button = 3;
-  
-  switch_state_changed = 1;
-  state_advance_buttons();
+  // state_advance();
+  //state_advance_buttons();
   }
