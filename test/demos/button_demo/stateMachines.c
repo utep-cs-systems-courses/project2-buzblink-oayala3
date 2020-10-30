@@ -6,7 +6,7 @@ char toggle_red()		/* always toggle! */
 {
   static char state = 0;
 
-  switch (red_on) {
+  switch (state) {
   case 0:
     red_on = 1;
     state = 1;
@@ -21,16 +21,16 @@ char toggle_red()		/* always toggle! */
 
 char toggle_green()
 {
-  static char state1=0;
-  switch(green_on)
+  static char state=0;
+  switch(state)
     {
   case 0:
     green_on=1;
-    state1=1;
+    state=1;
     break;
   case 1:
     green_on=0;
-    state1=0;
+    state=0;
     break;
   }
   return 1;
