@@ -39,10 +39,9 @@ void toggle_green()
   led_update();
 }
 
-//void state_advance_buttons()
-void state_advance(){
-  char changed=0;
-  switch(button){
+void state_advance_buttons(){
+  //void state_advance(){
+   switch(button){
   case 0:
     toggle_red();
     break;
