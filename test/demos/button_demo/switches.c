@@ -25,14 +25,14 @@ switch_init()			/* setup switch */
   P2OUT |= SWITCHES;		/* pull-ups for switches */
   P2DIR &= ~SWITCHES;		/* set switches' bits for input */
   switch_update_interrupt_sense();
-  //led_update();
+  led_update();
 }
 
 void
 switch_interrupt_handler()
 {
- 
   char p2val = switch_update_interrupt_sense();
+
   if((p2val & SW1)==0)
     button = 0;
   else if ((p2val & SW2)==0)
@@ -42,5 +42,13 @@ switch_interrupt_handler()
   else if ((p2val & SW4)==0)
     button = 3;
   //state_advance();
-  // state_advance_buttons();
+ 
+  static int once=1;
+  if(once){
+    once=0;
+    state_advance_buttons();
+  }else{
+    once=1;
+  }
+ 
   }
