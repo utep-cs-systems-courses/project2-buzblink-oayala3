@@ -54,7 +54,5 @@ void state_advance_buttons(){
   case 3:
     toggle_green();
     break;
-  default:
-    break;
   }
 }
