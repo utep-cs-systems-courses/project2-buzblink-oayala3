@@ -13,7 +13,6 @@ switch_update_interrupt_sense()
   char p2val = P2IN;
   /* update switch interrupt to detect changes from current buttons */
   P2IES |= (p2val & SWITCHES);	/* if switch up, sense down */
-  P2IES &= (p2val | ~SWITCHES);	/* if switch down, sense up */
   return p2val;
 }
 
@@ -33,20 +32,15 @@ switch_interrupt_handler()
 {
   char p2val = switch_update_interrupt_sense();
 
-  if((p2val & SW1)==0)
+  if      ((p2val & SW1) == 0)
     button = 0;
-  else if ((p2val & SW2)==0)
+  else if ((p2val & SW2) == 0)
     button = 1;
-  else if ((p2val & SW3)==0)
+  else if ((p2val & SW3) == 0)
     button = 2;
-  else if ((p2val & SW4)==0)
+  else if ((p2val & SW4) == 0)
     button = 3;
-  static int once=1;
 
-  if(once){
-    once=0;
-    state_advance_buttons();
-  }else{
-    once=1;
-  }
-  }
+  state_advance_buttons();
+ 
+}
