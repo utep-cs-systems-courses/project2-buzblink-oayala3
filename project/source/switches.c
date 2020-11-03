@@ -41,14 +41,12 @@ switch_interrupt_handler()
     button = 2;
   else if ((p2val & SW4)==0)
     button = 3;
-  //state_advance();
-  /* 
   static int once=1;
+
   if(once){
     once=0;
     state_advance_buttons();
   }else{
     once=1;
   }
-  */
   }

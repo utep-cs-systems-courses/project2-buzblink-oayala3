@@ -3,6 +3,8 @@
 #include "led.h"
 #include "switches.h"
 #include "buzzer.h"
+char music=0;
+char on=0;
 
 void toggle_red()		/* always toggle! */
 {
@@ -21,7 +23,20 @@ void toggle_red()		/* always toggle! */
   led_changed = 1;
   led_update();			/* always changes an led */
 }
-
+void turn_on(){
+  red_on      = 1;
+  green_on    = 1;
+  led_changed = 1;
+  on          = 1;
+  led_update();
+}
+void turn_off(){
+  red_on      = 0;
+  green_on    = 0;
+  led_changed = 1;
+  on          = 0;
+  led_update();
+}
 void toggle_green()
 {
   static char state1=0;
@@ -30,34 +45,52 @@ void toggle_green()
   case 0:
     green_on=1;
     state1=1;
+    led_update();
     break;
   case 1:
     green_on=0;
     state1=0;
+    led_update();
     break;
   }
   led_changed = 1;
   led_update();
 }
+void dim(){
+    int state = 1;
+  switch(state){
+  case 1:
+      turn_off();
+      break;
+  case 4:
+    turn_on();
+    break;
+  }
+  }
+}
 void state_advance_buttons(){
   //void state_advance(){
    switch(button){
   case 0:
-    toggle_red();
+    turn_on();
     break;
   case 1:
-    toggle_green();
+    turn_off();
  break;
   case 2:
-    toggle_red();
+    dim();
     break;
   case 3:
-    state_advance();
+    if(on)
+      music=1;
+    else
+      music=0;
     break;
   }
 }
 void state_advance(){
   static int state=-1;
+  if(music){
   state++;
   switch(state){
   case 0:  buzzer_set_period(7124); break;
@@ -76,5 +109,9 @@ void state_advance(){
   case 13: buzzer_set_period(7126); break;
   case 14: buzzer_set_period(7126); break;
   case 15: state=0; break;
+  }
+}
+  else{
+    buzzer_set_period(0);
   }
 }
